@@ -2,17 +2,23 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                echo 'Build running...'
-            }
-        }
+                echo '🛠️ Build et tests en cours...'
 
-        stage('Test') {
-            steps {
-                echo 'Testing...'
+                // Exemple pour Node.js (comme Juice Shop)
+                sh 'npm install'
+                sh 'npm test'
             }
         }
     }
-}
 
+    post {
+        success {
+            echo '✅ Build & Tests réussis ! Phase 1 terminée.'
+        }
+        failure {
+            echo '❌ Build ou Tests échoués ! Pipeline arrêté.'
+        }
+    }
+}
